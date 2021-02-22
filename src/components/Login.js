@@ -14,6 +14,8 @@ const Login = (props) => {
 
   const { push } = useHistory();
 
+  const [error, setError] = useState("");
+
   const handleChanges = (e) => {
     setCredentials({
       ...credentials,
@@ -23,6 +25,16 @@ const Login = (props) => {
 
   const submitLogin = (e) => {
     e.preventDefault();
+    axiosWithAuth()
+      .post("/login", credentials)
+      .then((response) => {
+        console.log("submitLogin response success", response);
+        push("/protected");
+      })
+      .catch((error) => {
+        console.log("submitLogin response error", error);
+        setError("Username or Password not valid.");
+      });
   };
 
   useEffect(() => {
@@ -48,37 +60,41 @@ const Login = (props) => {
   });
 
   return (
-    <form onSubmit={submitLogin}>
-      {/* //NOTE LOGIN INPUT */}
+    <div>
+      <form onSubmit={submitLogin}>
+        {/* //NOTE LOGIN INPUT */}
 
-      <label htmlFor="username">
-        username:{""}
-        <input
-          type="text"
-          name="username"
-          id="username"
-          placeholder="username, please"
-          value={credentials.username}
-          onChange={handleChanges}
-        />
-      </label>
+        <label htmlFor="username">
+          username:{""}
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="username, please"
+            value={credentials.username}
+            onChange={handleChanges}
+          />
+        </label>
 
-      {/* //NOTE PASSWORD INPUT */}
+        {/* //NOTE PASSWORD INPUT */}
 
-      <label htmlFor="password">
-        password:{""}
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="password, please"
-          value={credentials.password}
-          onChange={handleChanges}
-        />
-      </label>
-      <br></br>
-      <button type="submit">ready to login?</button>
-    </form>
+        <label htmlFor="password">
+          password:{""}
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="password, please"
+            value={credentials.password}
+            onChange={handleChanges}
+          />
+        </label>
+        <br></br>
+        <button type="submit">ready to login?</button>
+      </form>
+
+      {error ? <div style={{ color: "red" }}>{error}</div> : ""}
+    </div>
   );
 };
 
