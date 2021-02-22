@@ -12,6 +12,7 @@ const BubblePage = () => {
       .get("/colors")
       .then((response) => {
         console.log("BubblePage get request success", response);
+        setColorList(response.data);
       })
       .catch((error) => {
         console.log("Bubble Page get request error response", error);
