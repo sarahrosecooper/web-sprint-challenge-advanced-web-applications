@@ -1,13 +1,20 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import BubblePage from "./BubblePage";
+
+jest.mock("../helpers/getColors");
 
 test("Renders BubblePage without errors", () => {
   // Finish this test
+  render(<BubblePage />);
 });
 
-test("Fetches data and renders the bubbles on mounting", () => {
-  // Finish this test
+test("Fetches data and renders the bubbles on mounting", async () => {
+  render(<BubblePage />);
+
+  await waitFor(() => {
+    expect(screen.getAllByTestId("shape")).toHaveLength(6);
+  });
 });
 
 //Task List
