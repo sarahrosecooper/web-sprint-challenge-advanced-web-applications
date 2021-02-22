@@ -29,6 +29,7 @@ const Login = (props) => {
       .post("/login", credentials)
       .then((response) => {
         console.log("submitLogin response success", response);
+        localStorage.setItem("token", response.data.payload);
         push("/protected");
       })
       .catch((error) => {

@@ -10,7 +10,7 @@ function App() {
     <Router>
       <div className="App">
         {/* // NOTE Bubble page protected // */}
-        <PrivateRoute path="/protected">
+        <PrivateRoute exact path="/protected">
           <BubblePage />
         </PrivateRoute>
 
