@@ -11,7 +11,7 @@ const BubblePage = () => {
     axiosWithAuth()
       .get("/colors")
       .then((response) => {
-        console.log("BubblePage get request success", response);
+        // console.log("BubblePage get request success", response);
         setColorList(response.data);
       })
       .catch((error) => {
@@ -29,4 +29,4 @@ const BubblePage = () => {
 export default BubblePage;
 
 //Task List:
-//1. Make an axios call to retrieve all color data and push to state on mounting.
+// 👍 Make an axios call to retrieve all color data and push to state on mounting.
