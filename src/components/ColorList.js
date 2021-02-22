@@ -16,12 +16,19 @@ const ColorList = ({ colors, updateColors }) => {
     setColorToEdit(color);
   };
 
+  console.log("colors", colors);
+
   const saveEdit = (e) => {
     e.preventDefault();
     axiosWithAuth()
       .put(`/colors/${colorToEdit.id}`, colorToEdit)
       .then((response) => {
         console.log("saveEdit positive response", response);
+        updateColors(
+          colors.map((color) => {
+            return color.id === response.data.id ? response.data : color;
+          })
+        );
       })
       .catch((error) => {
         console.log("saveEdit negative response", error);
