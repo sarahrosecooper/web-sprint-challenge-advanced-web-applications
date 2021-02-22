@@ -9,12 +9,13 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Route exact path="/" component={Login} />
-
         {/* // NOTE Bubble page protected // */}
-        <PrivateRoute>
+        <PrivateRoute path="/protected">
           <BubblePage />
         </PrivateRoute>
+
+        {/* LOGIN route */}
+        <Route exact path="/" component={Login} />
       </div>
     </Router>
   );
@@ -23,4 +24,4 @@ function App() {
 export default App;
 
 //Task List:
-//1. Render BubblePage as a PrivateRoute
+// :+1: Render BubblePage as a PrivateRoute
