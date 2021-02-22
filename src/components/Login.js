@@ -1,12 +1,32 @@
-import React, { useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import axiosWithAuth from "../helpers/axiosWithAuth";
+import { useHistory } from "react-router-dom";
 
-const Login = () => {
+const Login = (props) => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
+
+  console.log("credentials", credentials);
+
+  const { push } = useHistory();
+
+  const handleChanges = (e) => {
+    setCredentials({
+      ...credentials,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const submitLogin = (e) => {
+    e.preventDefault();
+  };
 
   useEffect(() => {
-    axios
+    axiosWithAuth()
       .delete(`http://localhost:5000/api/colors/1`, {
         headers: {
           authorization:
@@ -14,7 +34,7 @@ const Login = () => {
         },
       })
       .then((res) => {
-        axios
+        axiosWithAuth()
           .get(`http://localhost:5000/api/colors`, {
             headers: {
               authorization: "",
@@ -28,7 +48,7 @@ const Login = () => {
   });
 
   return (
-    <form>
+    <form onSubmit={submitLogin}>
       {/* //NOTE LOGIN INPUT */}
 
       <label htmlFor="username">
@@ -38,8 +58,8 @@ const Login = () => {
           name="username"
           id="username"
           placeholder="username, please"
-          value=""
-          onChange=""
+          value={credentials.username}
+          onChange={handleChanges}
         />
       </label>
 
@@ -48,12 +68,12 @@ const Login = () => {
       <label htmlFor="password">
         password:{""}
         <input
-          type="text"
+          type="password"
           name="password"
           id="password"
           placeholder="password, please"
-          value=""
-          onChange=""
+          value={credentials.password}
+          onChange={handleChanges}
         />
       </label>
       <br></br>
